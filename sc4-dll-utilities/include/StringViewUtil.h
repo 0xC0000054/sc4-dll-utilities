@@ -28,25 +28,9 @@
 
 namespace StringViewUtil
 {
-	namespace detail
-	{
-		bool CaseInsensitiveComparer(char a, char b)
-		{
-			return std::toupper(static_cast<unsigned char>(a)) == std::toupper(static_cast<unsigned char>(b));
-		}
-	}
+	bool EqualsIgnoreCase(const std::string_view& lhs, const std::string_view& rhs);
 
-	bool EqualsIgnoreCase(const std::string_view& lhs, const std::string_view& rhs)
-	{
-		return lhs.length() == rhs.length()
-			&& std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), detail::CaseInsensitiveComparer);
-	}
-
-	bool StartsWithIgnoreCase(const std::string_view& input, const std::string_view& prefix)
-	{
-		return input.length() >= prefix.length()
-			&& std::equal(prefix.begin(), prefix.end(), input.begin(), detail::CaseInsensitiveComparer);
-	}
+	bool StartsWithIgnoreCase(const std::string_view& input, const std::string_view& prefix);
 
 	void Split(
 		const std::string_view& input,

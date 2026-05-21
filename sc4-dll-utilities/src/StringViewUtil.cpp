@@ -21,6 +21,26 @@
 
 #include "StringViewUtil.h"
 
+namespace
+{
+	bool CaseInsensitiveComparer(char a, char b)
+	{
+		return std::toupper(static_cast<unsigned char>(a)) == std::toupper(static_cast<unsigned char>(b));
+	}
+}
+
+bool StringViewUtil::EqualsIgnoreCase(const std::string_view& lhs, const std::string_view& rhs)
+{
+	return lhs.length() == rhs.length()
+		&& std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), CaseInsensitiveComparer);
+}
+
+bool StringViewUtil::StartsWithIgnoreCase(const std::string_view& input, const std::string_view& prefix)
+{
+	return input.length() >= prefix.length()
+		&& std::equal(prefix.begin(), prefix.end(), input.begin(), CaseInsensitiveComparer);
+}
+
 void StringViewUtil::Split(
 	const std::string_view& input,
 	std::string_view::value_type delim,
