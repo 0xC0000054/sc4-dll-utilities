@@ -45,6 +45,9 @@
     <ClInclude Include="include\PropertyUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\SC4NotificationDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DebugUtil.cpp">
@@ -75,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PropertyUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SC4NotificationDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -80,6 +80,7 @@
     <ClInclude Include="include\OccupantUtil.h" />
     <ClInclude Include="include\Patcher.h" />
     <ClInclude Include="include\PropertyUtil.h" />
+    <ClInclude Include="include\SC4NotificationDialog.h" />
     <ClInclude Include="include\SC4VersionDetection.h" />
     <ClInclude Include="include\StringConversion.h" />
     <ClInclude Include="include\StringViewUtil.h" />
@@ -92,6 +93,7 @@
     <ClCompile Include="src\OccupantUtil.cpp" />
     <ClCompile Include="src\Patcher.cpp" />
     <ClCompile Include="src\PropertyUtil.cpp" />
+    <ClCompile Include="src\SC4NotificationDialog.cpp" />
     <ClCompile Include="src\SC4VersionDetection.cpp" />
     <ClCompile Include="src\StringConversion.cpp" />
     <ClCompile Include="src\StringViewUtil.cpp" />
