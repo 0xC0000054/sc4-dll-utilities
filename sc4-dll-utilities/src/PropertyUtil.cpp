@@ -30,34 +30,9 @@ namespace
 {
 	bool GetUserVisibleNameKey(const cISCPropertyHolder* pPropertyHolder, StringResourceKey& key)
 	{
-		bool result = false;
+		constexpr uint32_t kUserVisibleNamePropertyID = 0x8A416A99;
 
-		if (pPropertyHolder)
-		{
-			constexpr uint32_t kUserVisibleNamePropertyID = 0x8A416A99;
-
-			const cISCProperty* userVisibleName = pPropertyHolder->GetProperty(kUserVisibleNamePropertyID);
-
-			if (userVisibleName)
-			{
-				const cIGZVariant* propertyValue = userVisibleName->GetPropertyValue();
-
-				if (propertyValue->GetType() == cIGZVariant::Type::Uint32Array
-					&& propertyValue->GetCount() == 3)
-				{
-					const uint32_t* pTGI = propertyValue->RefUint32();
-
-					uint32_t group = pTGI[1];
-					uint32_t instance = pTGI[2];
-
-					key.groupID = group;
-					key.instanceID = instance;
-					result = true;
-				}
-			}
-		}
-
-		return result;
+		return SCPropertyUtil::GetPropertyValue(pPropertyHolder, kUserVisibleNamePropertyID, key);
 	}
 
 	bool TryGetUserVisibleName(
