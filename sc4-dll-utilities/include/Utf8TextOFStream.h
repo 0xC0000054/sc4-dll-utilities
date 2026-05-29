@@ -25,6 +25,9 @@
 #include <fstream>
 #include <stdarg.h>
 
+// An output text stream that writes UTF-8 strings as binary data.
+// The strings used with this class are assumed to be UTF-8, no
+// character set conversion is performed when writing them.
 class Utf8TextOFStream
 {
 public:
