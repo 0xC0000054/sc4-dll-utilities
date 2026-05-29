@@ -87,6 +87,30 @@
     <ClInclude Include="include\Utf8TextOFStream.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseString.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseSystemService.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseUnknown.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseVariant.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseWinProc.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZCellMap.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZCOMDllDirector.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZMessage2.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZMessage2Standard.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cS3DVector2.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cS3DVector3.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cSC4BaseLotConfigurationFilter.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cSC4BaseOccupantFilter.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cSC4BaseViewInputControl.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cSCBaseProperty.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\PersistResourceKeyFilterBase.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\PersistResourceKeyFilterByInstance.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\PersistResourceKeyFilterByType.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\PersistResourceKeyFilterByTypeAndGroup.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\PersistResourceKeyFilterByTypeAndInstance.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SC4UI.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCLuaUtil.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCPropertyUtil.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\StringResourceManager.cpp" />
     <ClCompile Include="src\DebugUtil.cpp" />
     <ClCompile Include="src\LogDirectoryManager.cpp" />
     <ClCompile Include="src\Logger.cpp" />
