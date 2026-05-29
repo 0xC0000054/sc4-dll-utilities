@@ -76,12 +76,18 @@ namespace StringViewUtil
 					return true;
 				}
 			}
-			else if (EqualsIgnoreCase(input, "true"))
+			else if (
+				EqualsIgnoreCase(input, "true")
+				|| EqualsIgnoreCase(input, "on")
+				|| EqualsIgnoreCase(input, "enabled"))
 			{
 				outValue = true;
 				return true;
 			}
-			else if (EqualsIgnoreCase(input, "false"))
+			else if (
+				EqualsIgnoreCase(input, "false")
+				|| EqualsIgnoreCase(input, "off")
+				|| EqualsIgnoreCase(input, "disabled"))
 			{
 				outValue = false;
 				return true;
