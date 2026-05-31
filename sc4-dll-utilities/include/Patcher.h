@@ -76,6 +76,13 @@ namespace Patcher
 		DWORD dwOldProtect;
 	};
 
+	/**
+	 * @brief Overwrite memory at the specified address.
+	 * @tparam T The value type, must be bool, integer, or floating point.
+	 * @tparam
+	 * @param address The target address.
+	 * @param value The value to write.
+	 */
 	template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 	void OverwriteMemory(uintptr_t address, T value)
 	{
@@ -92,7 +99,35 @@ namespace Patcher
 		*((T*)address) = value;
 	}
 
+	/**
+	 * @brief Installs a jump at the specified address.
+	 * @param targetAddress The address to install the jump.
+	 * @param destination The destination address of the jump.
+	 */
+	void InstallJump(uintptr_t targetAddress, uintptr_t destination);
+
+	/**
+	 * @brief Installs a jump to the specified hook function.
+	 * @param targetAddress The target address.
+	 * @param pfnFunc A pointer to the hook function.
+	 * @remarks The hook function must be declared as follows:
+	 *
+	 * void NAKED_FUN HookFunctionName()
+	 * The function body should contain only assembly.
+	 */
 	void InstallHook(uintptr_t targetAddress, void (*pfnFunc)());
+
+	/**
+	 * @brief Replaces an existing function call instruction.
+	 * @param targetAddress The target address of the call instruction to update.
+	 * @param pfnFunc A pointer to the replacement function address.
+	 */
 	void InstallCallHook(uintptr_t targetAddress, void* pfnFunc);
+
+	/**
+	 * @brief Replaces a function address in a jump table.
+	 * @param targetAddress The jump table address to update.
+	 * @param pfnFunc A pointer to the replacement function address.
+	 */
 	void InstallJumpTableHook(uintptr_t targetAddress, void* pfnFunc);
 }

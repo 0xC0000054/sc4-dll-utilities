@@ -21,7 +21,7 @@
 
 #include "Patcher.h"
 
-void Patcher::InstallHook(uintptr_t targetAddress, void (*pfnFunc)())
+void Patcher::InstallJump(uintptr_t targetAddress, uintptr_t destination)
 {
 	// Allow the memory to be written to, the original page
 	// protection will be restored after we write to it.
@@ -32,9 +32,13 @@ void Patcher::InstallHook(uintptr_t targetAddress, void (*pfnFunc)())
 
 	// Patch the memory at the specified address.
 	*((uint8_t*)targetAddress) = 0xE9;
-	*((uintptr_t*)(targetAddress + 1)) = reinterpret_cast<uintptr_t>(pfnFunc) - targetAddress - 5;
+	*((uintptr_t*)(targetAddress + 1)) = destination - targetAddress - 5;
 }
 
+void Patcher::InstallHook(uintptr_t targetAddress, void(*pfnFunc)())
+{
+	InstallJump(targetAddress, reinterpret_cast<uintptr_t>(pfnFunc));
+}
 
 void Patcher::InstallCallHook(uintptr_t targetAddress, void* pfnFunc)
 {
