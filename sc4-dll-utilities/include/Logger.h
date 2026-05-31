@@ -41,11 +41,17 @@ class Logger
 public:
 	static Logger& GetInstance();
 
+	void Flush();
+
 	bool IsEnabled(LogLevel level) const;
 
 	void SetLogLevel(LogLevel level);
 
 	void WriteLogFileHeader(const char* const message);
+
+	void Write(LogLevel level, const char* const message);
+
+	void WriteFormatted(LogLevel level, const char* const format, ...);
 
 	void WriteLine(LogLevel level, const char* const message);
 
@@ -54,7 +60,12 @@ public:
 private:
 	Logger(const std::filesystem::path& logFilePath);
 
+	void WriteCore(const char* const message);
 	void WriteLineCore(const char* const message);
+
+	typedef void (Logger::* WriteFormattedCallback)(const char*);
+
+	void WriteFormattedCore(WriteFormattedCallback callback, const char* format, va_list args);
 
 	LogLevel logLevel;
 	Utf8TextOFStream file;

@@ -51,6 +51,11 @@ Logger& Logger::GetInstance()
 	return logger;
 }
 
+void Logger::Flush()
+{
+	file.Flush();
+}
+
 bool Logger::IsEnabled(LogLevel level) const
 {
 	return logLevel >= level;
@@ -70,6 +75,31 @@ Logger::Logger(const std::filesystem::path& path)
 void Logger::WriteLogFileHeader(const char* const text)
 {
 	file.WriteLine(text);
+}
+
+void Logger::Write(LogLevel level, const char* const message)
+{
+	if (!IsEnabled(level))
+	{
+		return;
+	}
+
+	WriteCore(message);
+}
+
+void Logger::WriteFormatted(LogLevel level, const char* const format, ...)
+{
+	if (!IsEnabled(level))
+	{
+		return;
+	}
+
+	va_list args;
+	va_start(args, format);
+
+	WriteFormattedCore(&Logger::WriteCore, format, args);
+
+	va_end(args);
 }
 
 void Logger::WriteLine(LogLevel level, const char* const message)
@@ -92,6 +122,37 @@ void Logger::WriteLineFormatted(LogLevel level, const char* const format, ...)
 	va_list args;
 	va_start(args, format);
 
+	WriteFormattedCore(&Logger::WriteLineCore, format, args);
+
+	va_end(args);
+}
+
+void Logger::WriteCore(const char* const message)
+{
+	if (file)
+	{
+#ifndef NDEBUG
+		DebugUtil::PrintToDebugOutput(message);
+#endif // !NDEBUG
+
+		file.Write(message);
+	}
+}
+
+void Logger::WriteLineCore(const char* const message)
+{
+	if (file)
+	{
+#ifndef NDEBUG
+		DebugUtil::PrintLineToDebugOutput(message);
+#endif // !NDEBUG
+
+		file.WriteLine(message);
+	}
+}
+
+void Logger::WriteFormattedCore(WriteFormattedCallback callback, const char* format, va_list args)
+{
 	va_list argsCopy;
 	va_copy(argsCopy, args);
 
@@ -111,7 +172,7 @@ void Logger::WriteLineFormatted(LogLevel level, const char* const format, ...)
 
 			std::vsnprintf(buffer.get(), formattedStringLengthWithNull, format, args);
 
-			WriteLineCore(buffer.get());
+			std::invoke(callback, this, buffer.get());
 		}
 		else
 		{
@@ -119,21 +180,7 @@ void Logger::WriteLineFormatted(LogLevel level, const char* const format, ...)
 
 			std::vsnprintf(buffer, stackBufferSize, format, args);
 
-			WriteLineCore(buffer);
+			std::invoke(callback, this, buffer);
 		}
-	}
-
-	va_end(args);
-}
-
-void Logger::WriteLineCore(const char* const message)
-{
-	if (file)
-	{
-#ifndef NDEBUG
-		DebugUtil::PrintLineToDebugOutput(message);
-#endif // !NDEBUG
-
-		file.WriteLine(message);
 	}
 }
