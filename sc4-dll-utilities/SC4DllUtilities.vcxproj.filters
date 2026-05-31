@@ -51,6 +51,9 @@
     <ClInclude Include="include\SC4NotificationDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\GZWinUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DebugUtil.cpp">
@@ -157,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\StringResourceManager.cpp">
       <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GZWinUtil.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -75,6 +75,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\DebugUtil.h" />
+    <ClInclude Include="include\GZWinUtil.h" />
     <ClInclude Include="include\LogDirectoryManager.h" />
     <ClInclude Include="include\Logger.h" />
     <ClInclude Include="include\OccupantUtil.h" />
@@ -112,6 +113,7 @@
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCPropertyUtil.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\StringResourceManager.cpp" />
     <ClCompile Include="src\DebugUtil.cpp" />
+    <ClCompile Include="src\GZWinUtil.cpp" />
     <ClCompile Include="src\LogDirectoryManager.cpp" />
     <ClCompile Include="src\Logger.cpp" />
     <ClCompile Include="src\OccupantUtil.cpp" />
