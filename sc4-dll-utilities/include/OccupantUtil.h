@@ -23,6 +23,7 @@
 #include "cIGZString.h"
 #include "cRZAutoRefCount.h"
 
+class cISC4City;
 class cISC4Lot;
 class cISC4Occupant;
 
@@ -34,4 +35,22 @@ namespace OccupantUtil
 
 	bool GetUserVisibleName(cISC4Occupant* pOccupant, cIGZString& name);
 	bool GetUserVisibleName(cISC4Occupant* pOccupant, cRZAutoRefCount<cIGZString>& name);
+
+	/**
+	 * @brief Attempts to get the occupant's lot.
+	 * @param pOccupant A pointer to the occupant.
+	 * @return The occupant's lot or a null pointer.
+
+	 */
+	cISC4Lot* GetLot(cISC4Occupant* pOccupant);
+
+	/**
+	 * @brief Attempts to get the occupant's lot.
+	 * @param pOccupant A pointer to the occupant.
+	 * @param pCity An pointer to the city.
+	 * This is an optimization for callers that already have
+	 * a city pointer available.
+	 * @return The occupant's lot or a null pointer.
+	 */
+	cISC4Lot* GetLot(cISC4Occupant* pOccupant, cISC4City* pCity);
 }

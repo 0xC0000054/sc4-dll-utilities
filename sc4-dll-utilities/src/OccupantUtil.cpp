@@ -21,10 +21,12 @@
 
 #include "OccupantUtil.h"
 #include "cISCPropertyHolder.h"
+#include "cISC4App.h"
 #include "cISC4City.h"
 #include "cISC4LotManager.h"
 #include "cISC4Occupant.h"
 #include "PropertyUtil.h"
+#include "GZServPtrs.h"
 
 bool OccupantUtil::GetDisplayName(cISC4Occupant* pOccupant, cIGZString& name)
 {
@@ -72,4 +74,35 @@ bool OccupantUtil::GetUserVisibleName(cISC4Occupant* pOccupant, cRZAutoRefCount<
 	}
 
 	return result;
+}
+
+cISC4Lot* OccupantUtil::GetLot(cISC4Occupant* pOccupant)
+{
+	cISC4Lot* pLot = nullptr;
+
+	cISC4AppPtr sc4App;
+
+	if (sc4App)
+	{
+		pLot = GetLot(pOccupant, sc4App->GetCity());
+	}
+
+	return pLot;
+}
+
+cISC4Lot* OccupantUtil::GetLot(cISC4Occupant* pOccupant, cISC4City* pCity)
+{
+	cISC4Lot* pLot = nullptr;
+
+	if (pOccupant && pCity)
+	{
+		cISC4LotManager* pLotManager = pCity->GetLotManager();
+
+		if (pLotManager)
+		{
+			pLot = pLotManager->GetOccupantLot(pOccupant);
+		}
+	}
+
+	return pLot;
 }
