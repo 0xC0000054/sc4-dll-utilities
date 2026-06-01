@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClInclude Include="include\DebugUtil.h" />
     <ClInclude Include="include\GZWinUtil.h" />
+    <ClInclude Include="include\IniReader.h" />
     <ClInclude Include="include\LogDirectoryManager.h" />
     <ClInclude Include="include\Logger.h" />
     <ClInclude Include="include\OccupantUtil.h" />
