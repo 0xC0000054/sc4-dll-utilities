@@ -47,7 +47,7 @@ namespace detail
 		{
 			std::string upperCase(value.length(), ' ');
 
-			std::transform(value.begin(), value.end(), upperCase.begin(), std::toupper);
+			std::transform(value.begin(), value.end(), upperCase.begin(), toupper);
 
 			return std::hash<std::string>{}(upperCase);
 		}
