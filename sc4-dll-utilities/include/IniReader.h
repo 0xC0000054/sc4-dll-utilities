@@ -142,6 +142,7 @@ namespace detail
 	}
 }
 
+// An INI file section containing key-value pairs.
 class IniSection
 {
 	friend class IniReader;
@@ -266,6 +267,11 @@ public:
 	}
 };
 
+// Reads the INI file and groups the contained values by section.
+//
+// Section and key names are case-insensitive and must contain only US-ASCII characters.
+// White space is removed from the section and key names when they are read.
+// Lines starting with a semicolon are comments, which are ignored.
 class IniReader
 {
 private:
