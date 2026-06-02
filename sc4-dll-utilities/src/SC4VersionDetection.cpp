@@ -44,35 +44,41 @@
 #include "wil/resource.h"
 #include "wil/win32_helpers.h"
 #include <Windows.h>
-#include <memory>
 
 namespace
 {
 	uint64_t GetAssemblyVersion(HMODULE hModule)
 	{
-		auto szVersionFile = wil::GetModuleFileNameW(hModule);
+		wil::unique_cotaskmem_string szVersionFile;
 
-		// http://stackoverflow.com/a/940743
-		DWORD verHandle = 0;
-		UINT  size = 0;
-		DWORD verSize = GetFileVersionInfoSizeW(szVersionFile.get(), &verHandle);
-
-		if (verSize > 0)
+		if (SUCCEEDED(wil::GetModuleFileNameW(hModule, szVersionFile)))
 		{
-			auto verData = std::make_unique_for_overwrite<BYTE[]>(verSize);
-			LPBYTE lpBuffer = nullptr;
+			// http://stackoverflow.com/a/940743
+			DWORD verHandle = 0;
+			UINT  size = 0;
+			DWORD verSize = GetFileVersionInfoSizeW(szVersionFile.get(), &verHandle);
 
-			if (GetFileVersionInfoW(szVersionFile.get(), 0, verSize, verData.get())
-				&& VerQueryValueW(verData.get(), L"\\", reinterpret_cast<LPVOID*>(&lpBuffer), &size)
-				&& size > 0)
+			if (verSize > 0)
 			{
-				VS_FIXEDFILEINFO* verInfo = (VS_FIXEDFILEINFO*)lpBuffer;
-				if (verInfo->dwSignature == 0xfeef04bd)
-				{
-					uint64_t qwValue = (uint64_t)verInfo->dwFileVersionMS << 32;
-					qwValue |= verInfo->dwFileVersionLS;
+				auto verData = wil::make_unique_cotaskmem_nothrow<BYTE[]>(verSize);
 
-					return qwValue;
+				if (verData)
+				{
+					LPBYTE lpBuffer = nullptr;
+
+					if (GetFileVersionInfoW(szVersionFile.get(), 0, verSize, verData.get())
+						&& VerQueryValueW(verData.get(), L"\\", reinterpret_cast<LPVOID*>(&lpBuffer), &size)
+						&& size > 0)
+					{
+						VS_FIXEDFILEINFO* verInfo = (VS_FIXEDFILEINFO*)lpBuffer;
+						if (verInfo->dwSignature == 0xfeef04bd)
+						{
+							uint64_t qwValue = (uint64_t)verInfo->dwFileVersionMS << 32;
+							qwValue |= verInfo->dwFileVersionLS;
+
+							return qwValue;
+						}
+					}
 				}
 			}
 		}
