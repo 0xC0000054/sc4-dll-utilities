@@ -172,7 +172,7 @@ void DebugUtil::PrintLineToDebugOutputFormattedUtf8(const char* const format, ..
 	va_list args;
 	va_start(args, format);
 
-	PrintToDebugOutputFormattedUtf8(format, args);
+	PrintLineToDebugOutputFormattedUtf8(format, args);
 
 	va_end(args);
 }
