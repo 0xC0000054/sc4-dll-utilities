@@ -29,10 +29,10 @@ namespace
 	}
 }
 
-bool StringViewUtil::EqualsIgnoreCase(const std::string_view& lhs, const std::string_view& rhs)
+bool StringViewUtil::EqualsIgnoreCase(const std::string_view& left, const std::string_view& right)
 {
-	return lhs.length() == rhs.length()
-		&& std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), CaseInsensitiveComparer);
+	return left.length() == right.length()
+		&& std::equal(left.begin(), left.end(), right.begin(), right.end(), CaseInsensitiveComparer);
 }
 
 bool StringViewUtil::StartsWithIgnoreCase(const std::string_view& input, const std::string_view& prefix)
@@ -43,7 +43,7 @@ bool StringViewUtil::StartsWithIgnoreCase(const std::string_view& input, const s
 
 void StringViewUtil::Split(
 	const std::string_view& input,
-	std::string_view::value_type delim,
+	std::string_view::value_type delimiter,
 	std::vector<std::string_view>& results)
 {
 	// The following code is adapted from: https://stackoverflow.com/a/36301144
@@ -103,7 +103,7 @@ void StringViewUtil::Split(
 		}
 		else
 		{
-			while (i < inputLength && input[i] != delim)
+			while (i < inputLength && input[i] != delimiter)
 			{
 				i++;
 			}
