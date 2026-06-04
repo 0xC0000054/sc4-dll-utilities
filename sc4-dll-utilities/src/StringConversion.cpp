@@ -107,7 +107,7 @@ void StringConversion::FromUtf16(const wchar_t* source, int sourceLength, char* 
 
 void StringConversion::FromUtf16(const std::wstring& source, char* destinationBuffer, int destinationBufferLength, uint32_t destinationCodePage)
 {
-	if (source.size() > static_cast<uint32_t>(INT_MAX))
+	if (source.size() > static_cast<size_t>(INT_MAX))
 	{
 		throw std::overflow_error("The string exceeds the int32_t range.");
 	}
