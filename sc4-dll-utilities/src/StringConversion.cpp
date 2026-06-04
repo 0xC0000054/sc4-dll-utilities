@@ -36,6 +36,11 @@ int StringConversion::GetConvertedStringLength(const wchar_t* source, int source
 
 int StringConversion::GetConvertedStringLength(const std::wstring& source, uint32_t destinationCodePage)
 {
+	if (source.size() > static_cast<size_t>(INT_MAX))
+	{
+		throw std::overflow_error("The string exceeds the int32_t range.");
+	}
+
 	return GetConvertedStringLength(source.c_str(), static_cast<int>(source.size()), destinationCodePage);
 }
 
@@ -85,6 +90,11 @@ std::wstring StringConversion::ToUtf16(const char* source, int sourceLength, uin
 
 std::wstring StringConversion::ToUtf16(const cIGZString& source)
 {
+	if (source.Strlen() > static_cast<uint32_t>(INT_MAX))
+	{
+		throw std::overflow_error("The string exceeds the int32_t range.");
+	}
+
 	return ToUtf16(source.ToChar(), static_cast<int>(source.Strlen()), CP_UTF8);
 }
 
@@ -97,6 +107,11 @@ void StringConversion::FromUtf16(const wchar_t* source, int sourceLength, char* 
 
 void StringConversion::FromUtf16(const std::wstring& source, char* destinationBuffer, int destinationBufferLength, uint32_t destinationCodePage)
 {
+	if (source.size() > static_cast<uint32_t>(INT_MAX))
+	{
+		throw std::overflow_error("The string exceeds the int32_t range.");
+	}
+
 	FromUtf16(source.c_str(), static_cast<int>(source.size()), destinationBuffer, destinationBufferLength, destinationCodePage);
 }
 
