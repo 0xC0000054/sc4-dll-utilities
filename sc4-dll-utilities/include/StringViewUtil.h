@@ -66,7 +66,7 @@ namespace StringViewUtil
 	 * @return A trimmed copy of the string view.
 	 */
 	template <typename T = bool(*)(char)>
-	constexpr std::string_view TrimStart(const std::string_view& sv, T pred = [](char v) { return !std::isspace(v) })
+	constexpr std::string_view TrimStart(const std::string_view& sv, T pred = [](char v) { return !std::isspace(v); })
 	{
 		return { std::find_if(sv.begin(), sv.end(), pred), sv.end() };
 	}
