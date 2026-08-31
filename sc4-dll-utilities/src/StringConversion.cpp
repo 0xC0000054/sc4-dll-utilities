@@ -163,6 +163,15 @@ void StringConversion::FromUtf16(const std::wstring& source, cIGZString& destina
 	}
 }
 
+cRZBaseString StringConversion::FromUtf16(const std::wstring& source)
+{
+	cRZBaseString result;
+
+	FromUtf16(source, result);
+
+	return result;
+}
+
 void StringConversion::Utf8ToUtf16(const char* utf8Buffer, int utf8BufferLength, wchar_t* utf16Buffer, int utf16BufferLength)
 {
 	ToUtf16(utf8Buffer, utf8BufferLength, CP_UTF8, utf16Buffer, utf16BufferLength);

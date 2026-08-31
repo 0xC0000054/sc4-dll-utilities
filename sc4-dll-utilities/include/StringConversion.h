@@ -20,10 +20,9 @@
  */
 
 #pragma once
+#include "cRZBaseString.h"
 #include <string>
 #include <wil/result.h>
-
-class cIGZString;
 
 // String character set/code page conversion functions that are thin wrappers
 // over the Windows WideCharToMultiByte and MultiByteToWideChar APIs.
@@ -59,6 +58,7 @@ namespace StringConversion
 
 	void FromUtf16(const wchar_t* source, int sourceLength, cIGZString& destination);
 	void FromUtf16(const std::wstring& source, cIGZString& destination);
+	cRZBaseString FromUtf16(const std::wstring& source);
 
 	void Utf8ToUtf16(const char* utf8Buffer, int utf8BufferLength, wchar_t* utf16Buffer, int utf16BufferLength);
 	std::wstring Utf8ToUtf16(const char* utf8Buffer, int utf8BufferLength);
