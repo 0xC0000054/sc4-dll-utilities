@@ -21,8 +21,7 @@
 
 #include "Logger.h"
 #include "DebugUtil.h"
-#include "wil/resource.h"
-#include "wil/win32_helpers.h"
+#include "FileSystem.h"
 
 namespace
 {
@@ -34,9 +33,7 @@ namespace
 		// This path format is used so that the global logger instance can be used before
 		// the DLL is given access to the GZCOM framework.
 
-		auto buffer = wil::GetModuleFileNameW(wil::GetModuleInstanceHandle());
-
-		std::filesystem::path path(buffer.get());
+		std::filesystem::path path(FileSystem::GetDllModulePath());
 
 		path.replace_extension(".log");
 
