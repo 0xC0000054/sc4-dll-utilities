@@ -86,6 +86,7 @@
     <ClInclude Include="include\PropertyUtil.h" />
     <ClInclude Include="include\SC4NotificationDialog.h" />
     <ClInclude Include="include\SC4VersionDetection.h" />
+    <ClInclude Include="include\Stopwatch.h" />
     <ClInclude Include="include\StringConversion.h" />
     <ClInclude Include="include\StringViewUtil.h" />
     <ClInclude Include="include\Utf8TextOFStream.h" />
