@@ -62,7 +62,8 @@ namespace StringViewUtil
 	 * @brief Trims characters from the start of the string view.
 	 * @tparam T The trim predicate function.
 	 * @param sv The input string view.
-	 * @param pred The character trim predicate, defaults to white space.
+	 * @param pred The character trim predicate, must return false for the character(s) that are to be trimmed.
+	 * Defaults to white space.
 	 * @return A trimmed copy of the string view.
 	 */
 	template <typename T = bool(*)(char)>
@@ -75,7 +76,8 @@ namespace StringViewUtil
 	 * @brief Trims characters from the end of the string view.
 	 * @tparam T The trim predicate function.
 	 * @param sv The input string view.
-	 * @param pred The character trim predicate, defaults to white space.
+	 * @param pred The character trim predicate, must return false for the character(s) that are to be trimmed.
+	 * Defaults to white space.
 	 * @return A trimmed copy of the string view.
 	 */
 	template<typename T = bool (*)(char)>
@@ -88,7 +90,8 @@ namespace StringViewUtil
 	 * @brief Trims characters from the start and end of the string view.
 	 * @tparam T The trim predicate function.
 	 * @param sv The input string view.
-	 * @param pred The character trim predicate, defaults to white space.
+	 * @param pred The character trim predicate, must return false for the character(s) that are to be trimmed.
+	 * Defaults to white space.
 	 * @return A trimmed copy of the string view.
 	 */
 	template<typename T = bool (*)(char)>
