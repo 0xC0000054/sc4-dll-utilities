@@ -31,9 +31,20 @@
 class Utf8TextOFStream
 {
 public:
-	Utf8TextOFStream(const std::filesystem::path& path);
+	// Initializes a class instance without opening a file.
+	// Callers must call Open before writing to the file.
+	Utf8TextOFStream();
+	Utf8TextOFStream(const std::filesystem::path& path, bool append = false);
+
+	void Close();
 
 	void Flush();
+
+	bool IsOpen() const;
+
+	// This method must be called before using an instance
+	// that was created using the default constructor.
+	void Open(const std::filesystem::path& path, bool append = false);
 
 	void Write(const char* text);
 
@@ -53,7 +64,7 @@ public:
 
 	explicit operator bool() const
 	{
-		return (bool)file;
+		return IsOpen() && (bool)file;
 	}
 
 private:

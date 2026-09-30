@@ -23,27 +23,9 @@
 #include "DebugUtil.h"
 #include "FileSystem.h"
 
-namespace
-{
-	std::filesystem::path GetLogFilePath()
-	{
-		// The global log file is located next to the DLL, using the same file name with
-		// a .log file extension.
-		//
-		// This path format is used so that the global logger instance can be used before
-		// the DLL is given access to the GZCOM framework.
-
-		std::filesystem::path path(FileSystem::GetDllModulePath());
-
-		path.replace_extension(".log");
-
-		return path;
-	}
-}
-
 Logger& Logger::GetInstance()
 {
-	static Logger logger(GetLogFilePath());
+	static Logger logger;
 
 	return logger;
 }
@@ -51,6 +33,12 @@ Logger& Logger::GetInstance()
 void Logger::Flush()
 {
 	file.Flush();
+}
+
+void Logger::Init(const std::filesystem::path& logFilePath, LogLevel logLevel)
+{
+	file.Open(logFilePath);
+	SetLogLevel(logLevel);
 }
 
 bool Logger::IsEnabled(LogLevel level) const
@@ -63,8 +51,8 @@ void Logger::SetLogLevel(LogLevel level)
 	logLevel = level;
 }
 
-Logger::Logger(const std::filesystem::path& path)
-	: file(path),
+Logger::Logger()
+	: file(),
 	  logLevel(LogLevel::Error)
 {
 }

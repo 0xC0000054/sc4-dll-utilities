@@ -40,3 +40,12 @@ std::filesystem::path FileSystem::GetDllIniFilePath()
 
 	return path;
 }
+
+std::filesystem::path FileSystem::GetDllLogFilePath()
+{
+	std::filesystem::path path(GetDllModulePath());
+
+	path.replace_extension(L".log");
+
+	return path;
+}

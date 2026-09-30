@@ -34,14 +34,15 @@ enum class LogLevel : int32_t
 };
 
 // Implements a global singleton logger.
-// The output file will be located next to the DLL, using
-// the same file name with a .log file extension.
+// Callers must initialize the logger before its first use by calling the Init method.
 class Logger
 {
 public:
 	static Logger& GetInstance();
 
 	void Flush();
+
+	void Init(const std::filesystem::path& logFilePath, LogLevel logLevel = LogLevel::Error);
 
 	bool IsEnabled(LogLevel level) const;
 
@@ -58,7 +59,7 @@ public:
 	void WriteLineFormatted(LogLevel level, const char* const format, ...);
 
 private:
-	Logger(const std::filesystem::path& logFilePath);
+	Logger();
 
 	void WriteCore(const char* const message);
 	void WriteLineCore(const char* const message);

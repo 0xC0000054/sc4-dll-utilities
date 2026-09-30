@@ -28,4 +28,6 @@ namespace FileSystem
 	std::filesystem::path GetDllModulePath();
 	// Gets the path of the INI file that may located next to the DLL.
 	std::filesystem::path GetDllIniFilePath();
+	// Gets the path of the log file that may be located next to the DLL.
+	std::filesystem::path GetDllLogFilePath();
 }

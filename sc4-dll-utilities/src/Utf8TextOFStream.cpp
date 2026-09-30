@@ -21,11 +21,18 @@
 
 #include "Utf8TextOFStream.h"
 
-Utf8TextOFStream::Utf8TextOFStream(const std::filesystem::path& path)
-	// Open the file in binary mode to allow UTF-8 text to be written without modification.
-	// UTF-8 is the native encoding of SC4.
-	: file(path.c_str(), std::ofstream::out | std::ofstream::trunc | std::ofstream::binary)
+Utf8TextOFStream::Utf8TextOFStream()
 {
+}
+
+Utf8TextOFStream::Utf8TextOFStream(const std::filesystem::path& path, bool append)
+{
+	Open(path, append);
+}
+
+void Utf8TextOFStream::Close()
+{
+	file.close();
 }
 
 void Utf8TextOFStream::Flush()
@@ -33,6 +40,24 @@ void Utf8TextOFStream::Flush()
 	if (file)
 	{
 		file.flush();
+	}
+}
+
+bool Utf8TextOFStream::IsOpen() const
+{
+	return file.is_open();
+}
+
+void Utf8TextOFStream::Open(const std::filesystem::path& path, bool append)
+{
+	if (!file.is_open())
+	{
+		// Open the file in binary mode to allow UTF-8 text to be written without modification.
+		// UTF-8 is the native encoding of SC4.
+		std::ofstream::openmode openMode = std::ofstream::out | std::ofstream::binary;
+		openMode |= (append ? std::ofstream::app : std::ofstream::trunc);
+
+		file.open(path.c_str(), openMode);
 	}
 }
 
