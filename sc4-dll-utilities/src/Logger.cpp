@@ -52,8 +52,8 @@ void Logger::SetLogLevel(LogLevel level)
 }
 
 Logger::Logger()
-	: file(),
-	  logLevel(LogLevel::Error)
+	: logLevel(LogLevel::Error),
+	  file()
 {
 }
 

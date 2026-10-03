@@ -31,7 +31,7 @@ public:
 	LogDirectoryManager();
 
 	// This must be called in OnStart to setup the log directory path.
-	void Init();
+	bool Init();
 
 	std::filesystem::path GetLogFilePath(const std::string_view& fileName) const;
 
