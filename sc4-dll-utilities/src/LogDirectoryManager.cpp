@@ -20,8 +20,10 @@
  */
 
 #include "LogDirectoryManager.h"
+#include "cIGZFrameWork.h"
+#include "cRZCOMDllDirector.h"
+#include "cIGZApp.h"
 #include "cISC4App.h"
-#include "GZServPtrs.h"
 #include "StringConversion.h"
 #include <stdexcept>
 
@@ -29,25 +31,24 @@ LogDirectoryManager::LogDirectoryManager() : initialized(false)
 {
 }
 
-void LogDirectoryManager::Init()
+bool LogDirectoryManager::Init()
 {
 	if (!initialized)
 	{
-		cISC4AppPtr sc4App;
-
-		cRZBaseString userDataDir;
-
-		sc4App->GetUserDataDirectory(userDataDir);
-
-		std::filesystem::path path = StringConversion::ToUtf16(userDataDir);
-
-		path /= "Logs";
-
-		std::filesystem::create_directory(path);
-
-		logDirectoryRoot = std::move(path);
-		initialized = true;
+		cIGZFrameWork* const pFramework = RZGetFrameWork();
+		cIGZApp* const pApp = pFramework->Application();
+		cISC4App* pISC4App;
+		if (pApp && pApp->QueryInterface(GZIID_cISC4App, reinterpret_cast<void**>(&pISC4App))) {
+			cRZBaseString userDataDir;
+			pISC4App->GetUserDataDirectory(userDataDir);
+			std::filesystem::path path = StringConversion::ToUtf16(userDataDir);
+			path /= "Logs";
+			std::filesystem::create_directory(path);
+			logDirectoryRoot = std::move(path);
+			initialized = true;
+		}
 	}
+	return initialized;
 }
 
 std::filesystem::path LogDirectoryManager::GetLogFilePath(const std::string_view& fileName) const
