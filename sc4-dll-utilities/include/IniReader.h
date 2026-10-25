@@ -178,6 +178,16 @@ public:
 		return values.empty();
 	}
 
+	const_iterator find(const std::string& key) const
+	{
+		return values.find(key);
+	}
+
+	const_iterator not_found() const
+	{
+		return values.end();
+	}
+
 	size_t size() const
 	{
 		return values.size();
