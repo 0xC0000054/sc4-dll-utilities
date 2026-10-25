@@ -65,15 +65,19 @@ namespace detail
 
 		inline std::tuple<LineType, std::string_view, std::string_view> ParseLine(const std::string_view& line, size_t lineNumber)
 		{
-			if (!line.empty())
+			const std::string_view trimmedLine = StringViewUtil::Trim(line);
+
+			if (!trimmedLine.empty())
 			{
-				if (line[0] == ';')
+				const char firstChar = trimmedLine[0];
+
+				if (firstChar == ';')
 				{
-					return std::tuple<LineType, std::string_view, std::string_view>(LineType::Comment, line, {});
+					return std::tuple<LineType, std::string_view, std::string_view>(LineType::Comment, trimmedLine, {});
 				}
-				else if (line[0] == '[')
+				else if (firstChar == '[')
 				{
-					std::string_view sectionLine = line;
+					std::string_view sectionLine = trimmedLine;
 					auto sectionCommentIndex = sectionLine.find_first_of(';');
 
 					if (sectionCommentIndex != std::string_view::npos)
@@ -106,11 +110,11 @@ namespace detail
 				}
 				else
 				{
-					auto equalsIndex = line.find_first_of('=');
+					auto equalsIndex = trimmedLine.find_first_of('=');
 
 					if (equalsIndex != std::string_view::npos)
 					{
-						std::string_view key = StringViewUtil::Trim(line.substr(0, equalsIndex));
+						std::string_view key = StringViewUtil::Trim(trimmedLine.substr(0, equalsIndex));
 
 						if (key.empty())
 						{
@@ -121,9 +125,9 @@ namespace detail
 
 						std::string_view value;
 
-						if (equalsIndex < (line.length() - 1))
+						if (equalsIndex < (trimmedLine.length() - 1))
 						{
-							value = StringViewUtil::Trim(line.substr(equalsIndex + 1));
+							value = StringViewUtil::Trim(trimmedLine.substr(equalsIndex + 1));
 						}
 
 						return std::tuple<LineType, std::string_view, std::string_view>(LineType::Key, key, value);
