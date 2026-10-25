@@ -20,6 +20,10 @@
  */
 
 #pragma once
+#include "cIGZFile.h"
+#include "cRZAutoRefCount.h"
+#include "GZFileStreamBufAdapter.h"
+#include "ResourceUtil.h"
 #include "StringViewUtil.h"
 #include <filesystem>
 #include <format>
@@ -307,6 +311,11 @@ public:
 		load(stream);
 	}
 
+	IniReader(const cGZPersistResourceKey& key) : sections()
+	{
+		load(key);
+	}
+
 	const_iterator begin() const
 	{
 		return sections.begin();
@@ -354,6 +363,25 @@ public:
 
 			lineNumber++;
 		}
+	}
+
+	void load(const cGZPersistResourceKey& key)
+	{
+		cRZAutoRefCount<cIGZFile> recordAsIGZFile;
+
+		if (!ResourceUtil::GetRecordAsIGZFile(key, recordAsIGZFile))
+		{
+			throw std::runtime_error("Failed to read the resource as a file.");
+		}
+
+		// Wrap the cIGZFile instance in a GZFileStreamBufAdapter
+		// so that it can be used with std::istream.
+
+		GZFileStreamBufAdapter adapter(recordAsIGZFile);
+
+		std::istream stream(&adapter);
+
+		load(stream);
 	}
 
 	size_t size() const

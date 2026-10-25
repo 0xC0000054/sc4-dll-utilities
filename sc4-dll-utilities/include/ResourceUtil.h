@@ -22,9 +22,13 @@
 #pragma once
 
 class cGZPersistResourceKey;
+class cIGZFile;
 class cIGZString;
+
+template <typename T> class cRZAutoRefCount;
 
 namespace ResourceUtil
 {
+	bool GetRecordAsIGZFile(const cGZPersistResourceKey& key, cRZAutoRefCount<cIGZFile>& file);
 	bool GetResourceFilePath(const cGZPersistResourceKey& key, cIGZString& path);
 }

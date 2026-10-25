@@ -21,11 +21,56 @@
 
 #include "ResourceUtil.h"
 #include "cGZPersistResourceKey.h"
+#include "cIGZCOM.h"
+#include "cIGZDBSerialRecordAsIGZFile.h"
+#include "cIGZPersistDBRecord.h"
+#include "cIGZPersistDBSerialRecord.h"
 #include "cIGZPersistResourceManager.h"
 #include "cIGZPersistDBSegment.h"
 #include "cIGZPersistDBSegmentMultiPackedFiles.h"
+#include "cRZCOMDllDirector.h"
 #include "cRZAutoRefCount.h"
 #include "GZServPtrs.h"
+
+bool ResourceUtil::GetRecordAsIGZFile(const cGZPersistResourceKey& key, cRZAutoRefCount<cIGZFile>& file)
+{
+	bool result = false;
+
+	cIGZCOM* const pCOM = RZGetCOMDllDirector()->GZCOM();
+	cIGZPersistResourceManagerPtr resMan;
+
+	if (pCOM && resMan)
+	{
+		cRZAutoRefCount<cIGZPersistDBRecord> record;
+
+		if (resMan->OpenDBRecord(key, record.AsPPObj(), false))
+		{
+			cRZAutoRefCount<cIGZPersistDBSerialRecord> serialRecord;
+
+			if (record->QueryInterface(GZIID_cIGZPersistDBSerialRecord, serialRecord.AsPPVoid()))
+			{
+				cRZAutoRefCount<cIGZDBSerialRecordAsIGZFile> serialRecordAsIGZFile;
+
+				if (pCOM->GetClassObject(
+					GZCLSID_cIGZDBSerialRecordAsIGZFile,
+					GZIID_cIGZDBSerialRecordAsIGZFile,
+					serialRecordAsIGZFile.AsPPVoid()))
+				{
+					if (serialRecordAsIGZFile->SetDBSerialRecord(serialRecord))
+					{
+						// Assigning to the output cRZAutoRefCount<cIGZFile> parameter
+						// will AddRef the cIGZDBSerialRecordAsIGZFile instance.
+
+						file = serialRecordAsIGZFile->AsIGZFile();
+						result = true;
+					}
+				}
+			}
+		}
+	}
+
+	return result;
+}
 
 bool ResourceUtil::GetResourceFilePath(const cGZPersistResourceKey& key, cIGZString& path)
 {
