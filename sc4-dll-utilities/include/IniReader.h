@@ -156,9 +156,7 @@ private:
 
 	KeyDataContainer values;
 
-	IniSection()
-	{
-	}
+	IniSection() = default;
 
 public:
 	using const_iterator = KeyDataContainer::const_iterator;
@@ -292,9 +290,42 @@ private:
 	using SectionContainer = std::unordered_map<std::string, IniSection, detail::CaseInsensitiveHash, detail::CaseInsensitiveEquality>;
 
 	SectionContainer sections;
+public:
+	using const_iterator = SectionContainer::const_iterator;
 
-	void parse_file(std::istream& stream)
+	IniReader() = default;
+
+	IniReader(const std::filesystem::path& path) : sections()
 	{
+		std::ifstream stream(path);
+
+		load(stream);
+	}
+
+	IniReader(std::istream& stream) : sections()
+	{
+		load(stream);
+	}
+
+	const_iterator begin() const
+	{
+		return sections.begin();
+	}
+
+	const_iterator end() const
+	{
+		return sections.end();
+	}
+
+	bool empty() const
+	{
+		return sections.empty();
+	}
+
+	void load(std::istream& stream)
+	{
+		sections.clear();
+
 		std::string line;
 		size_t lineNumber = 1;
 		std::string currentSectionName;
@@ -323,36 +354,6 @@ private:
 
 			lineNumber++;
 		}
-	}
-
-public:
-	using const_iterator = SectionContainer::const_iterator;
-
-	IniReader(const std::filesystem::path& path) : sections()
-	{
-		std::ifstream stream(path);
-
-		parse_file(stream);
-	}
-
-	IniReader(std::istream& stream) : sections()
-	{
-		parse_file(stream);
-	}
-
-	const_iterator begin() const
-	{
-		return sections.begin();
-	}
-
-	const_iterator end() const
-	{
-		return sections.end();
-	}
-
-	bool empty() const
-	{
-		return sections.empty();
 	}
 
 	size_t size() const
