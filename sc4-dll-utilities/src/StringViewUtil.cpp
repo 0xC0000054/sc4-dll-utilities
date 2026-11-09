@@ -59,6 +59,32 @@ bool StringViewUtil::StartsWithIgnoreCase(const std::wstring_view& input, const 
 		&& std::equal(prefix.begin(), prefix.end(), input.begin(), CaseInsensitiveComparerWChar);
 }
 
+bool StringViewUtil::EndsWithIgnoreCase(const std::string_view& input, const std::string_view& suffix)
+{
+	const size_t inputLength = input.length();
+	const size_t suffixLength = suffix.length();
+
+	return input.length() >= suffix.length()
+		&& std::equal(
+			suffix.begin(),
+			suffix.end(),
+			input.begin() + (inputLength - suffixLength),
+			CaseInsensitiveComparerChar);
+}
+
+bool StringViewUtil::EndsWithIgnoreCase(const std::wstring_view& input, const std::wstring_view& suffix)
+{
+	const size_t inputLength = input.length();
+	const size_t suffixLength = suffix.length();
+
+	return input.length() >= suffix.length()
+		&& std::equal(
+			suffix.begin(),
+			suffix.end(),
+			input.begin() + (inputLength - suffixLength),
+			CaseInsensitiveComparerWChar);
+}
+
 void StringViewUtil::Split(
 	const std::string_view& input,
 	std::string_view::value_type delimiter,

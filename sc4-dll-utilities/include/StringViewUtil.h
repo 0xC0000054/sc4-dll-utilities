@@ -61,6 +61,22 @@ namespace StringViewUtil
 	bool StartsWithIgnoreCase(const std::wstring_view& input, const std::wstring_view& prefix);
 
 	/**
+	 * @brief Determines weather the input string view ends with the specified suffix while ignoring case.
+	 * @param input The input string view.
+	 * @param suffix The suffix to search for.
+	 * @return True if the input string view ends with the specified suffix; otherwise, false.
+	 */
+	bool EndsWithIgnoreCase(const std::string_view& input, const std::string_view& suffix);
+
+	/**
+	 * @brief Determines weather the input string view ends with the specified suffix while ignoring case.
+	 * @param input The input string view.
+	 * @param suffix The suffix to search for.
+	 * @return True if the input string view ends with the specified suffix; otherwise, false.
+	 */
+	bool EndsWithIgnoreCase(const std::wstring_view& input, const std::wstring_view& suffix);
+
+	/**
 	 * @brief Splits the string view on the specified delimiter.
 	 * @param input The input string view.
 	 * @param delimiter The delimiter.
