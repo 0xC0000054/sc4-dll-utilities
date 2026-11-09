@@ -20,25 +20,43 @@
  */
 
 #include "StringViewUtil.h"
+#include <cwctype>
 
 namespace
 {
-	bool CaseInsensitiveComparer(char a, char b)
+	bool CaseInsensitiveComparerChar(char a, char b)
 	{
 		return std::toupper(static_cast<unsigned char>(a)) == std::toupper(static_cast<unsigned char>(b));
+	}
+
+	bool CaseInsensitiveComparerWChar(wchar_t a, wchar_t b)
+	{
+		return std::towupper(a) == std::towupper(b);
 	}
 }
 
 bool StringViewUtil::EqualsIgnoreCase(const std::string_view& left, const std::string_view& right)
 {
 	return left.length() == right.length()
-		&& std::equal(left.begin(), left.end(), right.begin(), right.end(), CaseInsensitiveComparer);
+		&& std::equal(left.begin(), left.end(), right.begin(), right.end(), CaseInsensitiveComparerChar);
+}
+
+bool StringViewUtil::EqualsIgnoreCase(const std::wstring_view& left, const std::wstring_view& right)
+{
+	return left.length() == right.length()
+		&& std::equal(left.begin(), left.end(), right.begin(), right.end(), CaseInsensitiveComparerWChar);
 }
 
 bool StringViewUtil::StartsWithIgnoreCase(const std::string_view& input, const std::string_view& prefix)
 {
 	return input.length() >= prefix.length()
-		&& std::equal(prefix.begin(), prefix.end(), input.begin(), CaseInsensitiveComparer);
+		&& std::equal(prefix.begin(), prefix.end(), input.begin(), CaseInsensitiveComparerChar);
+}
+
+bool StringViewUtil::StartsWithIgnoreCase(const std::wstring_view& input, const std::wstring_view& prefix)
+{
+	return input.length() >= prefix.length()
+		&& std::equal(prefix.begin(), prefix.end(), input.begin(), CaseInsensitiveComparerWChar);
 }
 
 void StringViewUtil::Split(

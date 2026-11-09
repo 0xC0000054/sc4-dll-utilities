@@ -37,12 +37,28 @@ namespace StringViewUtil
 	bool EqualsIgnoreCase(const std::string_view& left, const std::string_view& right);
 
 	/**
+	 * @brief Compares two string view instances for equality while ignoring case.
+	 * @param left The first string view to compare.
+	 * @param right The second string view to compare.
+	 * @return True if the string views are equal; otherwise, false.
+	 */
+	bool EqualsIgnoreCase(const std::wstring_view& left, const std::wstring_view& right);
+
+	/**
 	 * @brief Determines weather the input string view starts with the specified prefix while ignoring case.
 	 * @param input The input string view.
 	 * @param prefix The prefix to search for.
 	 * @return True if the input string view starts with the specified prefix; otherwise, false.
 	 */
 	bool StartsWithIgnoreCase(const std::string_view& input, const std::string_view& prefix);
+
+	/**
+	 * @brief Determines weather the input string view starts with the specified prefix while ignoring case.
+	 * @param input The input string view.
+	 * @param prefix The prefix to search for.
+	 * @return True if the input string view starts with the specified prefix; otherwise, false.
+	 */
+	bool StartsWithIgnoreCase(const std::wstring_view& input, const std::wstring_view& prefix);
 
 	/**
 	 * @brief Splits the string view on the specified delimiter.
