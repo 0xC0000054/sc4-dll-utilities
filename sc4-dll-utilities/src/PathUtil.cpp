@@ -143,7 +143,7 @@ void PathUtil::Combine(cIGZString const& root, const std::string_view& segment, 
 	}
 }
 
-std::string PathUtil::Combine(const std::string& root, const std::string_view& segment)
+std::string PathUtil::Combine(const std::string_view& root, const std::string_view& segment)
 {
 	if (!root.empty() && !segment.empty())
 	{
@@ -159,10 +159,10 @@ std::string PathUtil::Combine(const std::string& root, const std::string_view& s
 		return result;
 	}
 
-	return root;
+	return std::string(root);
 }
 
-std::wstring PathUtil::Combine(const std::wstring& root, const std::wstring_view& segment)
+std::wstring PathUtil::Combine(const std::wstring_view& root, const std::wstring_view& segment)
 {
 	if (!root.empty() && !segment.empty())
 	{
@@ -178,7 +178,7 @@ std::wstring PathUtil::Combine(const std::wstring& root, const std::wstring_view
 		return result;
 	}
 
-	return root;
+	return std::wstring(root);
 }
 
 std::string_view PathUtil::GetExtension(const cIGZString& path)

@@ -39,8 +39,8 @@ namespace PathUtil
 
 	cRZBaseString Combine(cIGZString const& path, const std::string_view& segment);
 	void Combine(cIGZString const& path, const std::string_view& segment, cIGZString& destination);
-	std::string Combine(const std::string& root, const std::string_view& segment);
-	std::wstring Combine(const std::wstring& root, const std::wstring_view& segment);
+	std::string Combine(const std::string_view& root, const std::string_view& segment);
+	std::wstring Combine(const std::wstring_view& root, const std::wstring_view& segment);
 
 	std::string_view GetFileName(const cIGZString& path);
 	std::string_view GetFileName(const std::string_view& path);
